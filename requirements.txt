@@ -1,3 +1,5 @@
 matplotlib
 tensorflow
 Flask
+flask_wtf
+wtforms
