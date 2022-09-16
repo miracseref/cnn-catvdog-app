@@ -1,0 +1,167 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
+
+:root {
+  --primary: #ffc400;
+  --light: #fff64f;
+  --dark: #c79400;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--primary);
+}
+
+h1 {
+  color: white;
+  font-size: 4rem;
+  text-align: center;
+  padding: 4rem 0;
+}
+
+h1 i {
+  margin-right: 6px;
+}
+
+form {
+  text-align: center;
+}
+
+#imgcontainer {
+  border: 1px solid white;
+  margin: 0 auto 2rem auto;
+  border-radius: 25px;
+  max-width: 450px;
+  max-height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#imgcontainer:empty {
+  display: none;
+}
+
+#imgcontainer img {
+  max-width: 425px;
+  max-height: 298px;
+  border-radius: 25px;
+  object-fit: contain;
+}
+
+.drag-area {
+  border: 1px dashed white;
+  margin: 0 auto 2rem auto;
+  width: 450px;
+  height: 300px;
+  border-radius: 25px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.drag-area.active {
+  border: 2px solid white;
+}
+
+.drag-area .icon {
+  font-size: 70px;
+  color: white;
+}
+
+.drag-area p {
+  user-select: none;
+  font-size: 30px;
+  font-weight: 500;
+  color: white;
+}
+
+.drag-area .upload-description {
+  font-style: italic;
+  font-weight: 200;
+  font-size: 12px;
+}
+
+.custom-file-upload {
+  background-color: white;
+  color: var(--primary);
+  display: inline-block;
+  padding: 7px 17px;
+  cursor: pointer;
+  border-radius: 20px;
+  transition: 0.3s;
+  margin-top: 15px;
+  user-select: none;
+}
+
+.custom-file-upload:hover {
+  border-radius: 40px;
+  box-shadow: 0px 0px 21px -1px var(--dark);
+  transition: 0.6s;
+}
+
+.btn-predict {
+  background-color: white;
+  color: var(--primary);
+  font-size: larger;
+  display: inline-block;
+  padding: 10px 17px;
+  cursor: pointer;
+  border-radius: 40px;
+  transition: 0.3s;
+  user-select: none;
+}
+
+.btn-predict:hover {
+  border-radius: 40px;
+  box-shadow: 0px 0px 40px 0px var(--light);
+  transition: 0.6s;
+  padding: 13px 25px;
+  font-weight: 600;
+}
+
+.drag-area img {
+  height: 100%;
+  width: 100%;
+  object-fit: scale-down;
+  border-radius: 5px;
+}
+
+.prediction-result {
+  color: white;
+  font-size: 3rem;
+  font-weight: lighter;
+  margin-top: 1rem;
+}
+
+footer {
+  margin-top: auto;
+}
+
+footer p {
+  text-align: center;
+  font-size: small;
+  color: white;
+  margin-bottom: 10px;
+}
+
+footer p a {
+  text-decoration: none;
+  color: white;
+  font-weight: 600;
+}
+
+.vanish {
+  opacity: 0;
+  transition: 0.7s ease;
+}

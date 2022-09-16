@@ -1,5 +1,5 @@
-matplotlib
+os
 tensorflow
 Flask
-flask_wtf
-wtforms
+werkzeug
+gunicorn

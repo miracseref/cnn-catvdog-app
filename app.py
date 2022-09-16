@@ -1,48 +1,74 @@
-import numpy as np
-import matplotlib.pyplot as plt
-from crypt import methods
-import tensorflow as tf
-from tensorflow import keras
-from flask import Flask, request, app, jsonify, url_for, render_template
-from flask_wtf import FlaskForm
-from wtforms import FileField, SubmitField
-from werkzeug.utils import secure_filename
 import os
-from wtforms.validators import InputRequired
+import tensorflow as tf
+from tensorflow.keras.utils import load_img, img_to_array
+from tensorflow import keras
+from flask import Flask, flash, request, app, redirect, render_template
+from werkzeug.utils import secure_filename
+
+UPLOAD_FOLDER = 'static/files'
+SECRET_KEY = 'supersecretkey'
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'supersecretkey'
-app.config['UPLOAD_FOLDER'] = 'static/images'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['SECRET_KEY'] = SECRET_KEY
 
-# Load the model 
+# Load the model
 model = tf.keras.models.load_model('model.h5')
 
-class UploadFileForm(FlaskForm):
-    file = FileField("File", validators=[InputRequired()])
-    submit = SubmitField('Upload File')
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
+def upload_file():
+    if request.method == 'POST':
+        # check if the post request has the file part
+        if 'file' not in request.files:
+            print('No file part')
+            return redirect(request.url)
+        file = request.files['file']
+        # If the user does not select file, the browser submits an
+        # empty file without a filename.
+        if file.filename == '':
+            flash('No selected file')
+            return redirect(request.url)
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
+
+def preprocess_image(img):
+    img = load_img(img, target_size=(200, 200))
+    img = img_to_array(img)
+    img = img.reshape(1, 200, 200, 3)
+    return img
+
 
 @app.route('/', methods=['GET', 'POST'])
-def home():
-    form = UploadFileForm()
-    if form.validate_on_submit():
-        file = form.file.data # First grab the file
-        file.save(os.path.join(os.path.abspath(os.path.dirname(__file__)),
-                                app.config['UPLOAD_FOLDER'],
-                                secure_filename(file.filename))) # Then save the file
-        return "File has been uploaded."
-    return render_template('index.html', form=form)
-
-@app.route('/predict', methods=['POST'])
 def predict():
-    # TROUVE LE CHEMIN POUR L'IMAGE AVEC LE MODULE OS 
-    # ENSUITE CORRIGE LA 1ERE VARIABLE CI-DESSOUS
-    image_path = os.path.abspath(app.config['UPLOAD_FOLDER'])
-    image = tf.keras.preprocessing.image.load_img(image_path)
-    input_arr = tf.keras.preprocessing.image.img_to_array(image)
-    input_arr = np.array([input_arr]) # convert single image to batch
-    predictions = model.predict(input_arr)
-    os.remove(image_path)
-    return render_template('index.html', predict_text= f"This is a {predictions}")
+    upload_file()
+    for file in os.listdir(app.config['UPLOAD_FOLDER']):
+        if (file.endswith(".png") or file.endswith(".jpg")
+                or file.endswith(".jpeg")):
+            image_path = os.path.join(app.config['UPLOAD_FOLDER'], file)
+    if 'image_path' in locals():
+        input_arr = preprocess_image(image_path)
+        prediction = model.predict(input_arr)
+    if 'prediction' in locals():
+        if prediction[0][0] == 0:
+            prediction_text = 'This is a cat.'
+        else:
+            prediction_text = 'This is a dog.'
+        os.remove(image_path)
+        return render_template('index.html',
+                               prediction_text=prediction_text)
+    else:
+        if 'image_path' in locals():
+            os.remove(image_path)
+        return render_template('index.html')
+
 
 if __name__ == "__main__":
     app.run(debug=True)
