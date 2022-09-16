@@ -1,7 +1,6 @@
 import os
-import tensorflow as tf
+from tensorflow.keras.models import load_model
 from tensorflow.keras.utils import load_img, img_to_array
-from tensorflow import keras
 from flask import Flask, flash, request, app, redirect, render_template
 from werkzeug.utils import secure_filename
 
@@ -14,7 +13,7 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['SECRET_KEY'] = SECRET_KEY
 
 # Load the model
-model = tf.keras.models.load_model('model.h5')
+model = load_model('model.h5')
 
 
 def allowed_file(filename):
