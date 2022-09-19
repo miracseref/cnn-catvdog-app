@@ -1,6 +1,5 @@
-tensorflow.keras.models.load_model
-tensorflow.keras.utils.load_img
-tensorflow.keras.utils.img_to_array
-Flask
-werkzeug
-gunicorn
+Keras-Preprocessing==1.1.2
+Flask==2.2.2
+Werkzeug==2.2.2
+Jinja2==3.1.2
+gunicorn==20.1.0
