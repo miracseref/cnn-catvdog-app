@@ -1,7 +1,8 @@
 import os
+
+from flask import Flask, app, flash, redirect, render_template, request
 from tensorflow.keras.models import load_model
-from tensorflow.keras.utils import load_img, img_to_array
-from flask import Flask, flash, request, app, redirect, render_template
+from tensorflow.keras.utils import img_to_array, load_img
 from werkzeug.utils import secure_filename
 
 UPLOAD_FOLDER = 'static/files'
