@@ -49,7 +49,7 @@ def preprocess_image(img):
 @app.route('/', methods=['GET', 'POST'])
 def predict():
     upload_file()
-    if os.path.isfile(os.listdir(app.config['UPLOAD_FOLDER'])):    
+    if os.path.isfile(app.config['UPLOAD_FOLDER']):    
         for file in os.listdir(app.config['UPLOAD_FOLDER']):
             if (file.endswith(".png") or file.endswith(".jpg")
                     or file.endswith(".jpeg")):
