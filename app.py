@@ -48,29 +48,28 @@ def preprocess_image(img):
 
 @app.route('/', methods=['GET', 'POST'])
 def predict():
-    # upload_file()
-    # if os.path.isfile(app.config['UPLOAD_FOLDER']):    
-    #     for file in os.listdir(app.config['UPLOAD_FOLDER']):
-    #         if (file.endswith(".png") or file.endswith(".jpg")
-    #                 or file.endswith(".jpeg")):
-    #             image_path = os.path.join(app.config['UPLOAD_FOLDER'], file)
-    # if 'image_path' in locals():
-    #     input_arr = preprocess_image(image_path)
-    #     prediction = model.predict(input_arr)
-    # if 'prediction' in locals():
-    #     if prediction[0][0] == 0:
-    #         prediction_text = 'This is a cat.'
-    #     else:
-    #         prediction_text = 'This is a dog.'
-    #     os.remove(image_path)
-    #     return render_template('index.html',
-    #                            prediction_text=prediction_text)
-    # else:
-    #     if 'image_path' in locals():
-    #         os.remove(image_path)
-    #     return render_template('index.html')
-    return render_template('index.html')
+    upload_file()
+    if os.path.isfile(app.config['UPLOAD_FOLDER']):    
+        for file in os.listdir(app.config['UPLOAD_FOLDER']):
+            if (file.endswith(".png") or file.endswith(".jpg")
+                    or file.endswith(".jpeg")):
+                image_path = os.path.join(app.config['UPLOAD_FOLDER'], file)
+    if 'image_path' in locals():
+        input_arr = preprocess_image(image_path)
+        prediction = model.predict(input_arr)
+    if 'prediction' in locals():
+        if prediction[0][0] == 0:
+            prediction_text = 'This is a cat.'
+        else:
+            prediction_text = 'This is a dog.'
+        os.remove(image_path)
+        return render_template('index.html',
+                               prediction_text=prediction_text)
+    else:
+        if 'image_path' in locals():
+            os.remove(image_path)
+        return render_template('index.html')
 
 
-# if __name__ == "__main__":
-app.run(debug=True)
+if __name__ == "__main__":
+    app.run(debug=True)
