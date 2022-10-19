@@ -2,7 +2,7 @@
 
 ![Logo](https://raw.githubusercontent.com/miracseref/cnn-catvdog-app/main/static/images/logo.png)
 
-Web app that classifies images using Deep Learning with TensorFlow.
+Web app made with Flask that classifies images using Deep Learning with TensorFlow.
 
 # How does it work?
 
