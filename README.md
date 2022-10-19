@@ -4,8 +4,6 @@
 
 This web application classifies the given image as _cat_ or _dog_.
 
-[Link of the web app](https://web-catvdog.herokuapp.com)
-
 # How does it work?
 
 ![Demo GIF](https://raw.githubusercontent.com/miracseref/cnn-catvdog-app/main/static/images/demo.gif)
