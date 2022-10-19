@@ -2,7 +2,7 @@
 
 ![Logo](https://raw.githubusercontent.com/miracseref/cnn-catvdog-app/main/static/images/logo.png)
 
-This web application classifies the given image as _cat_ or _dog_.
+Web app that classifies images using Deep Learning with TensorFlow.
 
 # How does it work?
 
